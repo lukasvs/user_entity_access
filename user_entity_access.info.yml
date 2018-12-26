@@ -1,0 +1,10 @@
+name: User entity access
+type: module
+description: Provides the user access to entities if he refers to these entities.
+core: 8.x
+package: Custom
+configure: user_entity_access.settings
+
+dependencies:
+  - drupal:user
+  - drupal:field

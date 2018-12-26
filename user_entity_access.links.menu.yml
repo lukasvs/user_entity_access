@@ -1,0 +1,4 @@
+user_entity_access.settings:
+  title: 'Settings of user_entity_access'
+  parent: system.admin_config_content
+  route_name: user_entity_access.settings

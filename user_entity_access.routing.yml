@@ -1,0 +1,7 @@
+user_entity_access.settings:
+  path: '/admin/config/content/user_entity_access'
+  defaults:
+    _form: '\Drupal\user_entity_access\Form\UserEntityAccessForm'
+    _title: 'Settings of user_entity_access'
+  requirements:
+    _permission: 'administer user_entity_access settings'

@@ -1,0 +1,56 @@
+<?php
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_entity_access().
+ */
+function user_entity_access_entity_access(EntityInterface $entity, $operation,
+AccountInterface $account) {
+  return _user_entity_access_entity_access($entity, $operation, $account);
+}
+
+/**
+ * Implements hook_node_access().
+ */
+function user_entity_access_node_access(\Drupal\node\NodeInterface $node, $op,
+AccountInterface $account) {
+  return _user_entity_access_entity_access($node, $op, $account);
+}
+
+/**
+ * Access checking user for entity.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   Entity access is checked.
+ *
+ * @param string $op
+ *   The operation to be performed.
+ *
+ * @param Drupal\Core\Session\AccountInterface $account
+ *   The user object to perform the access check operation on.
+ *
+ * @return Drupal\Core\Access\AccessResult
+ *
+ */
+function _user_entity_access_entity_access(EntityInterface $entity, $operation,
+AccountInterface $account) {
+  // Access checking is not required when an entity is not viewed.
+  if ($operation != 'view') {
+    return AccessResult::neutral();
+  }
+
+  // Access checking is not required when an entity no in the config.
+  $config = \Drupal::config('user_entity_access.settings');
+  $fields = $config->get('field_names');
+  if (empty($config) || !in_array($entity->getEntityTypeId(), $fields)) {
+    return AccessResult::neutral();
+  }
+
+  $access = \Drupal::service('user_entity_access.entity_access');
+  $access = $access->isAllowed($entity, $account->id());
+
+  return AccessResult::forbiddenIf(!$access)->cachePerUser();
+}

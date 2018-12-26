@@ -1,0 +1,8 @@
+services:
+  user_entity_access.entity_access:
+    class: Drupal\user_entity_access\UserEntityAccess
+  user_entity_access.config_update:
+    class: Drupal\user_entity_access\EventSubscriber\UserEntityAccessConfigUpdate
+    arguments: ['@config.factory']
+    tags:
+      - { name: event_subscriber }
