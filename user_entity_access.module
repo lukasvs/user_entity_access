@@ -45,7 +45,7 @@ AccountInterface $account) {
   // Access checking is not required when an entity no in the config.
   $config = \Drupal::config('user_entity_access.settings');
   $fields = $config->get('field_names');
-  if (empty($config) || !in_array($entity->getEntityTypeId(), $fields)) {
+  if (empty($fields) || !in_array($entity->getEntityTypeId(), $fields)) {
     return AccessResult::neutral();
   }
 

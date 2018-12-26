@@ -66,7 +66,6 @@ class UserEntityAccessForm extends ConfigFormBase {
     if ($fields) {
       // Get config field_names.
       $config = $this->config('user_entity_access.settings')->get('field_names');
-      ksm($config);
       $form['#tree'] = TRUE;
       foreach ($fields as $field_name => $field) {
         // Set only necessary fields.
